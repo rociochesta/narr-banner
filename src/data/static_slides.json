@@ -1,0 +1,59 @@
+[
+  {
+    "id": "serenity-prayer",
+    "label": "Serenity Prayer",
+    "icon": "HandsPrayingIcon",
+    "title": "The Serenity Prayer",
+    "paragraphs": [
+      "God, grant me the serenity to accept the things I cannot change, the courage to change the things I can, and the wisdom to know the difference."
+    ]
+  },
+  {
+    "id": "who-is-an-addict",
+    "label": "Who Is an Addict?",
+    "icon": "AnchorIcon",
+    "title": "Who Is an Addict?",
+    "paragraphs": [
+      "Most of us do not have to think twice about this question. We know! Our whole life and thinking was centered in drugs in one form or another — the getting and using and finding ways and means to get more. We lived to use and used to live. Very simply, an addict is a man or woman whose life is controlled by drugs.",
+      "We are people in the grip of a continuing and progressive illness whose ends are always the same: jails, institutions, and death."
+    ]
+  },
+  {
+    "id": "what-is-na",
+    "label": "What Is the NA Program?",
+    "icon": "WavesIcon",
+    "title": "What Is the Narcotics Anonymous Program?",
+    "paragraphs": [
+      "NA is a nonprofit fellowship or society of men and women for whom drugs had become a major problem. We are recovering addicts who meet regularly to help each other stay clean. This is a program of complete abstinence from all drugs. There is only one requirement for membership, the desire to stop using.",
+      "There are no strings attached to NA. We are not affiliated with any other organizations. We have no initiation fees or dues, no pledges to sign, no promises to make to anyone. We are not connected with any political, religious, or law enforcement groups, and are under no surveillance at any time. Anyone may join us, regardless of age, race, sexual identity, creed, religion, or lack of religion.",
+      "We are not interested in what or how much you used or who your connections were, what you have done in the past, how much or how little you have, but only in what you want to do about your problem and how we can help.",
+      "The newcomer is the most important person at any meeting, because we can only keep what we have by giving it away. We have learned from our group experience that those who keep coming to our meetings regularly stay clean."
+    ]
+  },
+  {
+    "id": "why-are-we-here",
+    "label": "Why Are We Here?",
+    "icon": "FireIcon",
+    "title": "Why Are We Here?",
+    "paragraphs": [
+      "Before coming to the Fellowship of NA, we could not manage our own lives. We could not live and enjoy life as other people do. We had to have something different and we thought we had found it in drugs. We placed their use ahead of the welfare of our families, our wives, husbands, and our children.",
+      "Most of us realized that in our addiction we were slowly committing suicide, but addiction is such a cunning enemy of life that we had lost the power to do anything about it. Many of us ended up in jail, or sought help through medicine, religion, and psychiatry. None of these methods was sufficient for us.",
+      "After coming to NA we realized we were sick people. We suffered from a disease from which there is no known cure. It can, however, be arrested at some point, and recovery is then possible."
+    ]
+  },
+  {
+    "id": "how-it-works",
+    "label": "How It Works",
+    "icon": "ListNumbersIcon",
+    "title": "How It Works",
+    "paragraphs": [
+      "If you want what we have to offer, and are willing to make the effort to get it, then you are ready to take certain steps. These are the principles that made our recovery possible.",
+      "1. We admitted that we were powerless over our addiction, that our lives had become unmanageable.\n2. We came to believe that a Power greater than ourselves could restore us to sanity.\n3. We made a decision to turn our will and our lives over to the care of God as we understood Him.",
+      "4. We made a searching and fearless moral inventory of ourselves.\n5. We admitted to God, to ourselves, and to another human being the exact nature of our wrongs.\n6. We were entirely ready to have God remove all these defects of character.",
+      "7. We humbly asked Him to remove our shortcomings.\n8. We made a list of all persons we had harmed, and became willing to make amends to them all.\n9. We made direct amends to such people wherever possible, except when to do so would injure them or others.",
+      "10. We continued to take personal inventory and when we were wrong promptly admitted it.\n11. We sought through prayer and meditation to improve our conscious contact with God as we understood Him, praying only for knowledge of His will for us and the power to carry that out.\n12. Having had a spiritual awakening as a result of these steps, we tried to carry this message to addicts, and to practice these principles in all our affairs.",
+      "This sounds like a big order, and we can't do it all at once. We didn't become addicted in one day, so remember — easy does it.\n\nThere is one thing more than anything else that will defeat us in our recovery: honesty, open-mindedness, and willingness. With these we are well on our way.",
+      "The only way to keep from returning to active addiction is not to take that first drug. If you are like us you know that one is too many and a thousand never enough.\n\nAlcohol is a drug. We are people with the disease of addiction who must abstain from all drugs in order to recover."
+    ]
+  }
+]

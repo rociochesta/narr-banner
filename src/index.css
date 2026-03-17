@@ -1,1 +1,18 @@
 @import "tailwindcss";
+
+@font-face {
+  font-family: 'PirataOne';
+  src: url('./assets/fonts/PirataOne-Regular.ttf');
+}
+@font-face {
+  font-family: 'PiecesOfEight';
+  src: url('./assets/fonts/Pieces of Eight.ttf');
+}
+@font-face {
+  font-family: 'Castlefire';
+  src: url('./assets/fonts/Castlefire.ttf');
+}
+@font-face {
+  font-family: 'BlackPear';
+  src: url('./assets/fonts/Black Pear.ttf');
+}
