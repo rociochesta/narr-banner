@@ -241,6 +241,53 @@
     "I quit using. My thinking didn’t get the memo.",
     "It’s not a bad habit. It’s a full system."
   ]
+},
+{
+  "id": "jft_03_22",
+  "month": 3,
+  "day": 22,
+  "source": "JFT",
+  "title": "Freedom Costs Something",
+  "title_pirate": "Freedom Ain’t Free, Matey",
+  "short_summary": "I used to live like everything I needed had to come from outside. People, attention, money, validation — whatever worked. If something was missing, I’d look for someone to fill it. If they did, I stayed. If they didn’t, I moved on. Same pattern, different faces. Calling it dependence sounds nicer than what it was. I was outsourcing my life. Self-support isn’t about being independent and impressive. It’s about not living off whatever is closest. Paying my own way — emotionally, financially, practically — doesn’t feel empowering at first. It feels inconvenient. Heavier. Less flexible. But it buys something I didn’t have before: I don’t have to bend my life around whoever is keeping me afloat.",
+  "summary_pirate": "I used to sail like everything I needed had to come from other ships — crew, coin, attention, validation, whatever was near. If somethin’ was missin’, I’d look for someone to supply it. If they did, I stayed aboard. If they didn’t, I jumped ship. Same pattern, new faces. Callin’ it dependence sounds kinder than it was. I was lettin’ others steer me life. Self-support ain’t about lookin’ strong — it’s about not livin’ off whatever port be closest. Payin’ me own way — in coin, in feelings, in action — don’t feel empowerin’ at first. It feels heavy. Inconvenient. Less flexible. But it buys somethin’ I never had: I don’t have to bend me course around whoever’s keepin’ me afloat.",
+  "theme_tags": ["self-support", "responsibility", "independence", "patterns", "freedom"],
+  "punchlines": [
+    "I wasn’t unlucky. I was dependent.",
+    "Free isn’t free. It’s paid for in responsibility.",
+    "If I fund my life, I get to run it."
+  ]
+},
+{
+  "id": "jft_03_23",
+  "month": 3,
+  "day": 23,
+  "source": "JFT",
+  "title": "I Don’t Run This",
+  "title_pirate": "I Ain’t the One Steerin’ This Ship",
+  "short_summary": "I still try to control things like I know what I’m doing. Plans, outcomes, people, timing. Then it breaks and I act surprised. The idea of a Higher Power isn’t about comfort. It’s about position. I’m not the one in charge. I do the part I can — show up, act, stay clean — and the rest isn’t mine to manage. I don’t like that. I’d rather know what’s coming and make it happen. But every time I’ve tried to run everything, I’ve made it worse. This isn’t about trusting perfectly. It’s about stepping out of the role I keep failing at.",
+  "summary_pirate": "I still try to steer the whole ship like I know the seas. Plans, outcomes, crew, timing — all of it. Then it crashes on the rocks and I act surprised. The idea of a higher power ain’t about comfort — it’s about position. I ain’t the captain of everything. I do me part — show up, act, stay clean — and the rest ain’t mine to command. I don’t like that truth. I’d rather chart the course and force it to happen. But every time I’ve tried to run the whole voyage, I’ve made a worse wreck of it. This ain’t about perfect trust. It’s about steppin’ down from a role I keep failin’ at.",
+  "theme_tags": ["higher-power", "control", "surrender", "action", "humility"],
+  "punchlines": [
+    "I can act. I can’t control outcomes. History proved that.",
+    "Control feels safe. It isn’t.",
+    "Every time I play God, things break."
+  ]
+},{
+  "id": "jft_03_24",
+  "month": 3,
+  "day": 24,
+  "source": "JFT",
+  "title": "The Past Still Talks. I Don’t Have to Answer.",
+  "title_pirate": "The Past Still Calls. I Don’t Have to Answer the Signal",
+  "short_summary": "My past doesn’t disappear just because I stopped using. It stays loud. It reminds me who I was, what I did, how I handled things. Sometimes it sounds like information. Most of the time it sounds like a verdict. Shame is convincing like that. It tells me I’m still the same person, just temporarily behaving better. And if I listen long enough, I start acting like it’s true. Letting go of the past isn’t deleting it. It’s not arguing with it either. It’s just not living there. The facts don’t change. But what I do today still counts more than what I did back then. Not because it’s inspiring. Because it’s current.",
+  "summary_pirate": "Me past don’t vanish just ‘cause I dropped the bottle. It stays loud, like a ghost on the deck. It reminds me who I was, what I did, how I sailed before. Sometimes it sounds like truth. Most times it sounds like a sentence already passed. Shame be clever like that. It tells me I’m still the same sailor — just temporarily actin’ different. And if I listen too long, I start believin’ it and sailin’ that way again. Letting go of the past ain’t about eras’in it, nor fightin’ it. It’s about not livin’ there no more. The facts don’t change. But what I do today still carries more weight than what I did back then. Not ‘cause it’s noble — but ‘cause it’s now.",
+  "theme_tags": ["past", "shame", "identity", "present", "recovery"],
+  "punchlines": [
+    "My past is loud. It’s not in charge.",
+    "Shame sounds like truth when I don’t question it.",
+    "The past explains me. It doesn’t control me."
+  ]
 }
 
 ]
