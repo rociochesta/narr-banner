@@ -193,6 +193,54 @@
     "Recovery isn’t convincing. It’s consistent.",
     "The message isn’t that I’m fine. It’s that I didn’t leave."
   ]
+},
+{
+  "id": "jft_03_19",
+  "month": 3,
+  "day": 19,
+  "source": "JFT",
+  "title": "You Don’t Need a Good Share",
+  "title_pirate": "Ye Don’t Need a Fine Speech",
+  "short_summary": "I used to think I had to say something meaningful. Something deep. Something that sounded like I understood what I was doing. Then my turn came and my brain emptied out like it owed me money. I’d compare myself to people who sounded calm, spiritual, put together. I wasn’t any of those things. I was just there. Still am. But that’s the part that actually matters. No one needs a perfect share. They need something real. A sentence that isn’t polished. A thought that doesn’t quite land. A moment that sounds exactly like their own head. This isn’t a performance. It’s identification. And I already qualify for that.",
+  "summary_pirate": "I once thought I needed to sound wise, deep, and steady when it came me turn to speak. Then the moment came, and me mind emptied like a chest already looted. I’d compare meself to calm, spiritual sailors who sounded like they had their bearings. I had none o’ that. I was just present. Still am. And that be the part that matters. No crew needs a perfect speech — they need somethin’ real. A rough sentence. A thought that barely holds. A moment that sounds like their own stormy mind. This ain’t a performance. It’s recognition. And I already belong.",
+  "theme_tags": ["sharing", "honesty", "comparison", "connection", "identity"],
+  "punchlines": [
+    "My share doesn’t need to be good. It just needs to be mine.",
+    "Silence feels safer. It also keeps me stuck.",
+    "I don’t need to sound okay. I just need to show up and say something real."
+  ]
+},
+{
+  "id": "jft_03_20",
+  "month": 3,
+  "day": 20,
+  "source": "JFT",
+  "title": "I’m Not the Highest Power Here",
+  "title_pirate": "I Ain’t the Highest Power on This Ship",
+  "short_summary": "I didn’t struggle with the idea of a Higher Power. I struggled with the idea that I wasn’t it. I trusted my thinking even after it kept driving me into the same wall. Same decisions. Same outcomes. Same cleanup. At some point it got hard to defend. Something was clearly stronger than me — addiction proved that daily. So the bar got lower. I didn’t need to understand anything spiritual. I just needed to accept that my best thinking wasn’t working. That there might be something — anything — that wasn’t trying to destroy me. I don’t have a clean definition of it. Some days I don’t even like the idea. But I’m still here. And I’m not here because of my decision-making.",
+  "summary_pirate": "I didn’t struggle with the idea of a higher power — I struggled with not bein’ it meself. I trusted me own thinking, even after it smashed me into the same rocks over and over. Same choices. Same wreckage. Same cleanup. Eventually, it got hard to defend. Somethin’ was clearly stronger than me — addiction proved that daily. So I lowered the bar. I didn’t need to understand the seas or the stars. I just needed to accept me own navigation wasn’t workin’. That maybe there was somethin’ out there not tryin’ to sink me. I can’t define it cleanly. Some days I don’t even like the idea. But I’m still afloat. And it sure as hell ain’t because of me decisions.",
+  "theme_tags": ["higher-power", "humility", "powerlessness", "belief", "survival"],
+  "punchlines": [
+    "My best thinking had a perfect record. It kept making things worse.",
+    "I didn’t find a Higher Power. I just stopped insisting I was it.",
+    "I don’t need to define it. I just need to not replace it with myself."
+  ]
+},
+{
+  "id": "jft_03_21",
+  "month": 3,
+  "day": 21,
+  "source": "JFT",
+  "title": "It Was Never Just the Drugs",
+  "title_pirate": "It Was Never Just the Rum",
+  "short_summary": "I used to think I just had a drug problem. Remove the drugs, problem solved. That lasted about five minutes. The drugs were the loud part, not the whole thing. The thinking stayed. The reactions stayed. The way I avoided, controlled, checked out, or pushed people away — all of that was still there, just without chemicals to hide behind. That’s when it got uncomfortable. Because now it wasn’t something I used. It was something I was living. Calling it a disease isn’t about making it dramatic. It’s about admitting it’s bigger than a bad habit and more persistent than willpower. The steps don’t fix me. They just give me a way to not keep making it worse in the same exact ways.",
+  "summary_pirate": "I once thought I only had a problem with the rum. Take away the rum, and the voyage be fixed. That illusion lasted about five minutes. The rum was just the loudest part of the storm, not the whole sea. Me thinking stayed the same. Me reactions stayed the same. The way I avoided, controlled, vanished, or drove others off deck — all of it remained, just without the drink to hide behind. That’s when it grew uncomfortable. Because now it weren’t somethin’ I used. It was somethin’ I lived. Callin’ it a disease ain’t about drama — it’s about admittin’ it’s bigger than a bad habit and stronger than willpower. The Steps don’t fix the sailor. They just give me a way to stop wreckin’ the ship in the same ways.",
+  "theme_tags": ["disease", "addiction", "patterns", "recovery", "self-awareness"],
+  "punchlines": [
+    "The drugs weren’t the whole problem. They were just the obvious part.",
+    "I quit using. My thinking didn’t get the memo.",
+    "It’s not a bad habit. It’s a full system."
+  ]
 }
 
 ]

@@ -6,9 +6,43 @@ import BannerPreview from './components/BannerPreview'
 import JFTSlide from './components/JFTSlide'
 import MeetingSlide from './components/MeetingSlide'
 import SlideCanvas, { STATIC_SLIDES } from './components/SlideCanvas'
+import BasicTextSlide from './components/BasicTextSlide'
+import BasicTextPagePicker from './components/BasicTextPagePicker'
 import ActionButtons from './components/ActionButtons'
 import AdvancedPanel from './components/AdvancedPanel'
 import SlidesPanel from './components/SlidesPanel'
+
+// ── Text chunking ─────────────────────────────────────────────────────────────
+function getChunks(paragraphs, maxChars) {
+  const text = Array.isArray(paragraphs) ? paragraphs.join(' ') : (paragraphs || '')
+  // Split at sentence boundaries
+  const sentences = text.match(/[^.!?]+[.!?]+["\u201D']?\s*|[^.!?]+$/g) || [text]
+  const chunks = []
+  let current = ''
+  for (const s of sentences) {
+    const t = s.trim()
+    if (!t) continue
+    if (current.length + t.length + 1 <= maxChars) {
+      current += (current ? ' ' : '') + t
+    } else {
+      if (current) chunks.push(current.trim())
+      // Single sentence longer than limit — split at word boundary
+      if (t.length > maxChars) {
+        let rem = t
+        while (rem.length > maxChars) {
+          const cut = rem.lastIndexOf(' ', maxChars)
+          chunks.push(rem.slice(0, cut > 0 ? cut : maxChars).trim())
+          rem = rem.slice(cut > 0 ? cut + 1 : maxChars)
+        }
+        current = rem
+      } else {
+        current = t
+      }
+    }
+  }
+  if (current.trim()) chunks.push(current.trim())
+  return chunks.length ? chunks : [text]
+}
 
 const defaultForm = {
   day: 'Thursday Night',
@@ -34,6 +68,11 @@ const defaultForm = {
   slideOrientation: 'portrait',
   deckSlides: { 'serenity-prayer': false },
   deckSlideOrder: [],
+  basicTextMode: 'chapter',
+  basicTextChapter: '',
+  basicTextEntry: null,
+  basicTextPageSelection: {},
+  basicTextTopicSelection: {},
   meetingDate: '',
   slideTitleSize: 22,
   slideTextSize: 13,
@@ -115,10 +154,19 @@ function BannerMaker({ form, setForm, theme, setTheme, onBack }) {
 }
 
 // ── Slide Deck ───────────────────────────────────────────────────────────────
-function DeckMaker({ form, setForm, theme, setTheme, onBack }) {
+function DeckMaker({ form, setForm, theme, setTheme, onBack, basicTextData }) {
   const [deckIndex, setDeckIndex] = useState(0)
   const [isPresenting, setIsPresenting] = useState(false)
   const [fsScale, setFsScale] = useState(1)
+  const [showPicker, setShowPicker] = useState(false)
+
+  // Auto-show reader when Basic Text is active
+  useEffect(() => {
+    if (form.type !== 'Basic Text') { setShowPicker(false); return }
+    if (form.basicTextMode === 'topic') { setShowPicker(true); return }
+    if (form.basicTextMode === 'chapter' && form.basicTextChapter && form.basicTextEntry) { setShowPicker(true); return }
+    setShowPicker(false)
+  }, [form.basicTextChapter, form.basicTextEntry, form.type, form.basicTextMode])
 
   const orientation = form.slideOrientation || 'portrait'
   const isJFT       = form.type === 'Just for Today'
@@ -142,9 +190,50 @@ function DeckMaker({ form, setForm, theme, setTheme, onBack }) {
       ]
     : []
 
+  // Expand Basic Text into chunk-slides — chapter mode or topic mode
+  const MAX_CHARS = orientation === 'landscape' ? 260 : 460
+
+  const pageToChunkItems = (pg, pageIdx, entry, idPrefix) => {
+    const paras = Array.isArray(pg.paragraphs) ? pg.paragraphs : (pg.text || '').split('\n\n').filter(Boolean)
+    const chunks = getChunks(paras, MAX_CHARS)
+    return chunks.map((chunk, ci) => ({
+      id:          `${idPrefix}-${pageIdx}-${ci}`,
+      chunk,
+      pageNum:     pg.page,
+      chunkIdx:    ci,
+      totalChunks: chunks.length,
+      entry,
+      label:       chunks.length > 1
+        ? `${entry.title} · p.${pg.page} (${ci + 1}/${chunks.length})`
+        : `${entry.title} · p.${pg.page}`,
+    }))
+  }
+
+  const basicTextSlides = (() => {
+    if (form.type !== 'Basic Text') return []
+    if (form.basicTextMode === 'topic') {
+      if (!basicTextData) return []
+      const sel = form.basicTextTopicSelection || {}
+      return basicTextData.flatMap(chapter =>
+        chapter.pages.flatMap((pg, pageIdx) => {
+          if (!sel[`${chapter.value}::${pageIdx}`]) return []
+          return pageToChunkItems(pg, pageIdx, chapter, `bt-topic-${chapter.value}`)
+        })
+      )
+    }
+    // chapter mode
+    if (!form.basicTextEntry?.pages?.length) return []
+    return form.basicTextEntry.pages.flatMap((pg, i) => {
+      const pageSel = form.basicTextPageSelection?.[form.basicTextChapter]
+      if (pageSel && pageSel[i] === false) return []
+      return pageToChunkItems(pg, i, form.basicTextEntry, 'bt')
+    })
+  })()
+
   const deckItems = [
     { id: isJFT ? 'jft' : 'meeting', label: isJFT ? 'JFT Summary' : form.type },
     ...jftFullSlides,
+    ...basicTextSlides,
     ...slideOrder
       .filter(key => form.deckSlides?.[key] && key !== 'jft-full')
       .flatMap(key => {
@@ -162,12 +251,14 @@ function DeckMaker({ form, setForm, theme, setTheme, onBack }) {
   const safeIndex   = Math.min(deckIndex, deckItems.length - 1)
   const currentDeck = deckItems[safeIndex]
 
-  const isJFTFull   = currentDeck?.id?.startsWith('jft-full-')
-  const jftFullType = isJFTFull ? currentDeck.id.replace('jft-full-', '') : null
+  const isJFTFull    = currentDeck?.id?.startsWith('jft-full-')
+  const jftFullType  = isJFTFull ? currentDeck.id.replace('jft-full-', '') : null
+  const isBasicText  = !!(currentDeck?.chunk !== undefined && currentDeck?.entry)
 
   const elementId = currentDeck?.id === 'jft'    ? 'jft-slide'
                   : currentDeck?.id === 'meeting' ? 'meeting-slide'
                   : isJFTFull                     ? currentDeck.id
+                  : isBasicText                   ? `basic-text-${currentDeck.pageNum}-${currentDeck.chunkIdx}`
                   : `slide-${currentDeck?.id}-${currentDeck?.slideIdx ?? 0}`
 
   const goPrev = () => setDeckIndex(i => Math.max(0, i - 1))
@@ -199,8 +290,9 @@ function DeckMaker({ form, setForm, theme, setTheme, onBack }) {
     <>
       {currentDeck?.id === 'jft'     && <JFTSlide     form={form} theme={theme} orientation={orientation} />}
       {currentDeck?.id === 'meeting' && <MeetingSlide form={form} theme={theme} orientation={orientation} />}
-      {jftFullType && <JFTFullSlide entry={form.jftFullEntry} slideType={jftFullType} form={form} theme={theme} orientation={orientation} />}
-      {!isJFTFull && currentDeck?.id !== 'jft' && currentDeck?.id !== 'meeting' && (
+      {jftFullType  && <JFTFullSlide   entry={form.jftFullEntry}  slideType={jftFullType} form={form} theme={theme} orientation={orientation} />}
+      {isBasicText  && <BasicTextSlide chunk={currentDeck.chunk} pageNum={currentDeck.pageNum} chunkIdx={currentDeck.chunkIdx} totalChunks={currentDeck.totalChunks} entry={currentDeck.entry} form={form} theme={theme} orientation={orientation} />}
+      {!isJFTFull && !isBasicText && currentDeck?.id !== 'jft' && currentDeck?.id !== 'meeting' && (
         <SlideCanvas slideType={currentDeck?.id} slideIdx={currentDeck?.slideIdx ?? 0} form={form} theme={theme} orientation={orientation} />
       )}
     </>
@@ -280,7 +372,7 @@ function DeckMaker({ form, setForm, theme, setTheme, onBack }) {
 
       <div className="flex gap-8 justify-center items-start flex-wrap">
         <div className="flex flex-col gap-3 w-full max-w-xs">
-          <FormPanel form={form} setForm={setForm} theme={theme} setTheme={setTheme} />
+          <FormPanel form={form} setForm={setForm} theme={theme} setTheme={setTheme} mode="deck" basicTextData={basicTextData} />
           <AdvancedPanel form={form} setForm={setForm} />
           <SlidesPanel form={form} setForm={setForm} />
         </div>
@@ -309,23 +401,59 @@ function DeckMaker({ form, setForm, theme, setTheme, onBack }) {
             </button>
           </div>
 
-          {/* Slide with side arrows */}
-          <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
-            {arrowBtn(safeIndex === 0, goPrev, <CaretLeftIcon size={22} weight="bold" />)}
-            <CurrentSlide />
-            {arrowBtn(safeIndex === deckItems.length - 1, goNext, <CaretRightIcon size={22} weight="bold" />)}
-          </div>
+          {/* Slide area — or picker when selecting Basic Text pages */}
+          {showPicker ? (
+            <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '12px' }}>
+              <BasicTextPagePicker
+                mode={form.basicTextMode === 'topic' ? 'topic' : 'chapter'}
+                entry={form.basicTextEntry}
+                allData={basicTextData}
+                selection={form.basicTextMode === 'topic'
+                  ? form.basicTextTopicSelection
+                  : form.basicTextPageSelection?.[form.basicTextChapter]}
+                onChange={sel => setForm(f => form.basicTextMode === 'topic'
+                  ? { ...f, basicTextTopicSelection: sel }
+                  : { ...f, basicTextPageSelection: { ...f.basicTextPageSelection, [f.basicTextChapter]: sel } }
+                )}
+              />
+              <button
+                onClick={() => setShowPicker(false)}
+                className="flex items-center gap-2 px-6 py-2.5 rounded-lg border border-[#FFD84D88]
+                  bg-[#FFD84D15] text-[#FFD84D] text-xs tracking-[2px] uppercase font-bold
+                  hover:border-[#FFD84D] hover:bg-[#FFD84D22] transition-all"
+              >
+                Done — Build Slides ({basicTextSlides.length} pages)
+              </button>
+            </div>
+          ) : (
+            <>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+                {arrowBtn(safeIndex === 0, goPrev, <CaretLeftIcon size={22} weight="bold" />)}
+                <CurrentSlide />
+                {arrowBtn(safeIndex === deckItems.length - 1, goNext, <CaretRightIcon size={22} weight="bold" />)}
+              </div>
 
-          <div className="flex gap-3">
-            <button
-              onClick={() => setIsPresenting(true)}
-              className="flex items-center gap-2 px-4 py-2 rounded-lg border border-[#FFD84D55]
-                text-[#FFD84D] text-xs tracking-[2px] uppercase hover:border-[#FFD84D] hover:bg-[#FFD84D11] transition-all"
-            >
-              <ArrowsOutSimpleIcon size={14} weight="bold" />Present
-            </button>
-            <ActionButtons form={form} activeSlide={elementId} customLabel="Download Slide" />
-          </div>
+              <div className="flex gap-3 flex-wrap justify-center">
+                {form.type === 'Basic Text' && form.basicTextMode === 'chapter' && form.basicTextEntry && (
+                  <button
+                    onClick={() => setShowPicker(true)}
+                    className="flex items-center gap-2 px-4 py-2 rounded-lg border border-[#FFD84D33]
+                      text-[#f5edd8aa] text-xs tracking-[2px] uppercase hover:border-[#FFD84D88] hover:text-[#FFD84D] transition-all"
+                  >
+                    Pages ({basicTextSlides.length}/{form.basicTextEntry.pages.length})
+                  </button>
+                )}
+                <button
+                  onClick={() => setIsPresenting(true)}
+                  className="flex items-center gap-2 px-4 py-2 rounded-lg border border-[#FFD84D55]
+                    text-[#FFD84D] text-xs tracking-[2px] uppercase hover:border-[#FFD84D] hover:bg-[#FFD84D11] transition-all"
+                >
+                  <ArrowsOutSimpleIcon size={14} weight="bold" />Present
+                </button>
+                <ActionButtons form={form} activeSlide={elementId} customLabel="Download Slide" />
+              </div>
+            </>
+          )}
         </div>
       </div>
     </div>
@@ -334,13 +462,18 @@ function DeckMaker({ form, setForm, theme, setTheme, onBack }) {
 
 // ── Root ─────────────────────────────────────────────────────────────────────
 function App() {
-  const [mode, setMode]     = useState(null) // null | 'banner' | 'deck'
-  const [form, setForm]     = useState(defaultForm)
-  const [theme, setTheme]   = useState('sunset-golden')
+  const [mode, setMode]           = useState(null)
+  const [form, setForm]           = useState(defaultForm)
+  const [theme, setTheme]         = useState('sunset-golden')
+  const [basicTextData, setBTData] = useState(null)
+
+  useEffect(() => {
+    fetch('/data/basic_text.json').then(r => r.json()).then(setBTData).catch(() => {})
+  }, [])
 
   if (!mode) return <ModeSelector onSelect={setMode} />
 
-  const shared = { form, setForm, theme, setTheme, onBack: () => setMode(null) }
+  const shared = { form, setForm, theme, setTheme, onBack: () => setMode(null), basicTextData }
 
   return mode === 'banner'
     ? <BannerMaker {...shared} />

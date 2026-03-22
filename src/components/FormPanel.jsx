@@ -15,6 +15,19 @@ const MEETING_TYPES = [
 ]
 
 
+const BASIC_TEXT_CHAPTERS = [
+  'Chapter One — Who Is an Addict?',
+  'Chapter Two — What Is the Narcotics Anonymous Program?',
+  'Chapter Three — Why Are We Here?',
+  'Chapter Four — How It Works',
+  'Chapter Five — What Can I Do?',
+  'Chapter Six — The Twelve Traditions of Narcotics Anonymous',
+  'Chapter Seven — Recovery and Relapse',
+  'Chapter Eight — We Do Recover',
+  'Chapter Nine — Just for Today — Living the Program',
+  'Chapter Ten — More Will Be Revealed',
+]
+
 const DAYS = [
   'None',
   'Monday Night',
@@ -60,7 +73,7 @@ function Section({ title, defaultOpen = false, children }) {
   )
 }
 
-export default function FormPanel({ form, setForm, theme, setTheme }) {
+export default function FormPanel({ form, setForm, theme, setTheme, mode = 'banner', basicTextData = null }) {
   const update = (field, value) => setForm(f => ({ ...f, [field]: value }))
 
   const [jftData,     setJftData]     = useState(null)
@@ -87,6 +100,29 @@ export default function FormPanel({ form, setForm, theme, setTheme }) {
       setForm(f => ({ ...f, jftEntry: null, jftFullEntry: null }))
     }
   }, [form.type, jftData, jftFullData])
+
+  useEffect(() => {
+    if (form.type === 'Basic Text' && basicTextData) {
+      const entry = basicTextData.find(c => c.value === form.basicTextChapter) ?? null
+      setForm(f => {
+        // Initialize page selection for this chapter if not yet set
+        const existing = f.basicTextPageSelection?.[f.basicTextChapter]
+        const needsInit = entry && !existing
+        const newSel = needsInit
+          ? Object.fromEntries(entry.pages.map((_, i) => [i, true]))
+          : existing
+        return {
+          ...f,
+          basicTextEntry: entry,
+          basicTextPageSelection: needsInit
+            ? { ...f.basicTextPageSelection, [f.basicTextChapter]: newSel }
+            : f.basicTextPageSelection,
+        }
+      })
+    } else {
+      setForm(f => ({ ...f, basicTextEntry: null }))
+    }
+  }, [form.type, form.basicTextChapter, basicTextData])
 
   return (
     <div className="bg-[#2a1505] border border-[#FFD84D33] rounded-2xl p-5 flex flex-col gap-1 w-full max-w-xs">
@@ -191,6 +227,48 @@ export default function FormPanel({ form, setForm, theme, setTheme }) {
               className="bg-[#1a0f05] border border-[#FFD84D44] rounded-lg px-3 py-2 text-sm font-bold text-[#f5edd8] placeholder-[#f5edd833] focus:outline-none focus:border-[#FFD84D]"
             />
           )}
+          {form.type === 'Basic Text' && (
+            <div className="flex flex-col gap-2">
+              {/* Chapter / Topic toggle */}
+              <div className="flex">
+                {[['chapter', 'By Chapter'], ['topic', 'By Topic']].map(([id, label]) => (
+                  <button key={id}
+                    onClick={() => update('basicTextMode', id)}
+                    className={`flex-1 py-1.5 text-[10px] tracking-[2px] uppercase border transition-all
+                      ${form.basicTextMode === id
+                        ? 'bg-[#FFD84D18] border-[#FFD84D66] text-[#FFD84D] font-bold'
+                        : 'bg-transparent border-[#FFD84D22] text-[#f5edd855] hover:border-[#FFD84D44]'}
+                      ${id === 'chapter' ? 'rounded-l-lg' : 'rounded-r-lg'}`}
+                  >{label}</button>
+                ))}
+              </div>
+
+              {/* Chapter mode: chapter dropdown */}
+              {form.basicTextMode !== 'topic' && (
+                <select
+                  value={form.basicTextChapter}
+                  onChange={e => update('basicTextChapter', e.target.value)}
+                  className="bg-[#1a0f05] border border-[#FFD84D44] rounded-lg px-3 py-2 text-sm font-bold text-[#f5edd8] focus:outline-none focus:border-[#FFD84D]"
+                >
+                  <option value="">— Select chapter —</option>
+                  {BASIC_TEXT_CHAPTERS.map(c => <option key={c} value={c}>{c}</option>)}
+                </select>
+              )}
+
+              {/* Topic mode: info — selection happens in the reader panel */}
+              {form.basicTextMode === 'topic' && (() => {
+                const sel = form.basicTextTopicSelection || {}
+                const selPages = Object.values(sel).filter(Boolean).length
+                return (
+                  <p className="text-[10px] text-[#FFD84D88] tracking-[1px] leading-relaxed italic">
+                    {selPages > 0
+                      ? `${selPages} page${selPages !== 1 ? 's' : ''} selected — browse topics in the reader →`
+                      : 'Browse topics in the reader panel →'}
+                  </p>
+                )
+              })()}
+            </div>
+          )}
         </div>
         {(form.type === 'Just for Today' || form.type === 'JFT — Full Reading') && (
           <div className="flex flex-col gap-2 bg-[#1a0f05] border border-[#FFD84D22] rounded-lg p-3">
@@ -271,39 +349,42 @@ export default function FormPanel({ form, setForm, theme, setTheme }) {
         </div>
       </Section>
 
-      {/* Times — collapsed */}
-      <Section title="🕐 Times" defaultOpen={false}>
-        <input
-          value={form.times1}
-          onChange={e => update('times1', e.target.value)}
-          className="bg-[#1a0f05] border border-[#FFD84D44] rounded-lg px-3 py-2 text-sm font-bold text-[#f5edd8] focus:outline-none focus:border-[#FFD84D]"
-        />
-        <input
-          value={form.times2}
-          onChange={e => update('times2', e.target.value)}
-          className="bg-[#1a0f05] border border-[#FFD84D44] rounded-lg px-3 py-2 text-sm font-bold text-[#f5edd8] focus:outline-none focus:border-[#FFD84D]"
-        />
-      </Section>
+      {/* Times + Zoom — banner only */}
+      {mode !== 'deck' && (
+        <>
+          <Section title="🕐 Times" defaultOpen={false}>
+            <input
+              value={form.times1}
+              onChange={e => update('times1', e.target.value)}
+              className="bg-[#1a0f05] border border-[#FFD84D44] rounded-lg px-3 py-2 text-sm font-bold text-[#f5edd8] focus:outline-none focus:border-[#FFD84D]"
+            />
+            <input
+              value={form.times2}
+              onChange={e => update('times2', e.target.value)}
+              className="bg-[#1a0f05] border border-[#FFD84D44] rounded-lg px-3 py-2 text-sm font-bold text-[#f5edd8] focus:outline-none focus:border-[#FFD84D]"
+            />
+          </Section>
 
-      {/* Zoom — collapsed */}
-      <Section title="💻 Zoom" defaultOpen={false}>
-        <div className="flex flex-col gap-1">
-          <label className="text-xs font-bold text-[#f5edd8cc]">Zoom ID</label>
-          <input
-            value={form.zoomId}
-            onChange={e => update('zoomId', e.target.value)}
-            className="bg-[#1a0f05] border border-[#FFD84D44] rounded-lg px-3 py-2 text-sm font-bold text-[#f5edd8] focus:outline-none focus:border-[#FFD84D]"
-          />
-        </div>
-        <div className="flex flex-col gap-1">
-          <label className="text-xs font-bold text-[#f5edd8cc]">Password</label>
-          <input
-            value={form.zoomPw}
-            onChange={e => update('zoomPw', e.target.value)}
-            className="bg-[#1a0f05] border border-[#FFD84D44] rounded-lg px-3 py-2 text-sm font-bold text-[#f5edd8] focus:outline-none focus:border-[#FFD84D]"
-          />
-        </div>
-      </Section>
+          <Section title="💻 Zoom" defaultOpen={false}>
+            <div className="flex flex-col gap-1">
+              <label className="text-xs font-bold text-[#f5edd8cc]">Zoom ID</label>
+              <input
+                value={form.zoomId}
+                onChange={e => update('zoomId', e.target.value)}
+                className="bg-[#1a0f05] border border-[#FFD84D44] rounded-lg px-3 py-2 text-sm font-bold text-[#f5edd8] focus:outline-none focus:border-[#FFD84D]"
+              />
+            </div>
+            <div className="flex flex-col gap-1">
+              <label className="text-xs font-bold text-[#f5edd8cc]">Password</label>
+              <input
+                value={form.zoomPw}
+                onChange={e => update('zoomPw', e.target.value)}
+                className="bg-[#1a0f05] border border-[#FFD84D44] rounded-lg px-3 py-2 text-sm font-bold text-[#f5edd8] focus:outline-none focus:border-[#FFD84D]"
+              />
+            </div>
+          </Section>
+        </>
+      )}
 
     </div>
   )

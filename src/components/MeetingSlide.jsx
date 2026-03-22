@@ -209,7 +209,9 @@ export default function MeetingSlide({ form, theme, orientation = 'portrait' }) 
           textShadow:   '1px 2px 8px rgba(0,0,0,0.8)',
           marginBottom: '18px',
         }}>
-          {form.speaker || form.type}
+          {form.type === 'Basic Text' && form.basicTextChapter
+            ? form.basicTextChapter
+            : form.speaker || form.type}
         </div>
 
         {/* Divider */}
@@ -261,16 +263,6 @@ export default function MeetingSlide({ form, theme, orientation = 'portrait' }) 
             Host: {form.host}
           </div>
         )}
-        <div style={{
-          fontFamily:   '"Cinzel", serif',
-          fontSize:     '9px',
-          fontWeight:   400,
-          color:        bodyText,
-          letterSpacing:'1px',
-          opacity:      0.6,
-        }}>
-          {form.times1} · {form.times2}
-        </div>
       </div>
 
     </div>
