@@ -32,7 +32,7 @@ export default function ActionButtons({ form, activeSlide = 'banner', customLabe
         const a = document.createElement('a')
         a.href = url
         const suffix = activeSlide === 'banner' ? '' : `-${activeSlide}`
-        a.download = `narr-${(form.day || 'meeting').replace(/\s+/g, '-').toLowerCase()}${suffix}.png`
+        a.download = `${(form.day || 'meeting').replace(/\s+/g, '-').toLowerCase()}${suffix}.png`
         document.body.appendChild(a)
         a.click()
         document.body.removeChild(a)
@@ -50,7 +50,7 @@ export default function ActionButtons({ form, activeSlide = 'banner', customLabe
   function shareWhatsApp() {
     const speakerLine = form.speaker ? `\nSpeaker: ${form.speaker}` : ''
     const msg =
-      `NARR Meeting - Narcotics Anonymous Recovery Rangers\n\n` +
+      `Meeting - Narcotics Anonymous Recovery Rangers\n\n` +
       `${form.day}\n` +
       `${form.type}${speakerLine}\n\n` +
       `${form.times1}\n` +

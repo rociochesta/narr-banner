@@ -128,7 +128,7 @@ export default function FormPanel({ form, setForm, theme, setTheme, mode = 'bann
     <div className="bg-[#2a1505] border border-[#FFD84D33] rounded-2xl p-5 flex flex-col gap-1 w-full max-w-xs">
 
       <p className="text-[#FFD84D] text-xs tracking-[4px] uppercase font-bold text-center mb-3">
-        <AnchorIcon size={14} weight="bold" className="inline mr-1 align-middle" />NARR Banner Maker
+        <AnchorIcon size={14} weight="bold" className="inline mr-1 align-middle" />Banner Maker
       </p>
 
       {/* Theme — open by default */}

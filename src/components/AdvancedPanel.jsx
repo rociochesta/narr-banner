@@ -74,7 +74,7 @@ export default function AdvancedPanel({ form, setForm }) {
                 onChange={e => update('accentColor', e.target.value)}
                 className="w-10 h-8 rounded cursor-pointer border border-[#FFD84D33] bg-transparent"
               />
-              <span className="text-xs text-[#f5edd866]">NARR · borders</span>
+              <span className="text-xs text-[#f5edd866]">borders</span>
             </div>
 
             <div className="flex items-center gap-3">

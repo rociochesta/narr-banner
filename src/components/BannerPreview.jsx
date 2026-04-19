@@ -75,7 +75,7 @@ export default function BannerPreview({ form, theme, font }) {
       {form.showLogo && (
         <img
           src={form.logoColor === 'black' ? logoBlack : logoWhite}
-          alt="NARR logo"
+          alt="logo"
           crossOrigin="anonymous"
           style={{
             position: 'absolute',
@@ -101,21 +101,7 @@ export default function BannerPreview({ form, theme, font }) {
         gap: '0',
       }}>
 
-        {/* 1. NARR */}
-        <div style={{
-          fontFamily: "'PirataOne', serif",
-
-          fontSize: '76px',
-          color: accent,
-          lineHeight: 0.85,
-          textShadow: '3px 3px 0 rgba(0,0,0,0.6)',
-          letterSpacing: '6px',
-          marginBottom: '6px',
-        }}>
-          NARR
-        </div>
-
-        {/* 1. Full name — bigger, small caps style, wide tracking */}
+        {/* Full name — bigger, small caps style, wide tracking */}
         <div style={{
           fontFamily: '"Cinzel", serif',
           fontSize: '9px',

@@ -107,7 +107,7 @@ export default function SlideCanvas({ slideType, slideIdx = 0, form, theme, orie
       {form.showLogo && (
         <img
           src={form.logoColor === 'black' ? logoBlack : logoWhite}
-          alt="NARR logo"
+          alt="logo"
           crossOrigin="anonymous"
           style={{
             position: 'absolute',
@@ -138,22 +138,6 @@ export default function SlideCanvas({ slideType, slideIdx = 0, form, theme, orie
           Host: {form.host}
         </div>
       )}
-
-      {/* NARR wordmark — top right */}
-      <div style={{
-        position:      'absolute',
-        top:           '18px',
-        right:         '22px',
-        fontFamily:    "'PirataOne', serif",
-        fontSize:      isLand ? '30px' : '38px',
-        color:         accent,
-        lineHeight:    1,
-        letterSpacing: '4px',
-        textShadow:    '2px 2px 0 rgba(0,0,0,0.7)',
-        zIndex:        10,
-      }}>
-        NARR
-      </div>
 
       {/* Day + Date — top left */}
       {topLabel && (

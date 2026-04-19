@@ -86,7 +86,7 @@ export default function BasicTextSlide({ chunk, pageNum, chunkIdx = 0, totalChun
       <div style={{ position: 'absolute', inset: 0, background: overlayGradient }} />
 
       {form.showLogo && (
-        <img src={form.logoColor === 'black' ? logoBlack : logoWhite} alt="NARR logo" crossOrigin="anonymous"
+        <img src={form.logoColor === 'black' ? logoBlack : logoWhite} alt="logo" crossOrigin="anonymous"
           style={{ position: 'absolute', bottom: isLand ? '14px' : '20px', left: isLand ? '16px' : '22px', width: isLand ? '52px' : '60px', opacity: 0.7, zIndex: 10 }}
         />
       )}
@@ -96,11 +96,6 @@ export default function BasicTextSlide({ chunk, pageNum, chunkIdx = 0, totalChun
           Host: {form.host}
         </div>
       )}
-
-      {/* NARR wordmark */}
-      <div style={{ position: 'absolute', top: '18px', right: '22px', fontFamily: "'PirataOne', serif", fontSize: isLand ? '30px' : '38px', color: accent, lineHeight: 1, letterSpacing: '4px', textShadow: '2px 2px 0 rgba(0,0,0,0.7)', zIndex: 10 }}>
-        NARR
-      </div>
 
       {topLabel && (
         <div style={{ position: 'absolute', top: '22px', left: '22px', fontFamily: '"Cinzel", serif', fontSize: '8px', letterSpacing: '2px', color: accent, opacity: 0.72, zIndex: 10 }}>

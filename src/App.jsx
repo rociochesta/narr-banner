@@ -84,7 +84,7 @@ function ModeSelector({ onSelect }) {
     <div className="min-h-screen bg-[#1a0f05] text-[#f5edd8] flex flex-col items-center justify-center p-8 gap-10">
       <h1 className="text-center font-bold text-[#FFD84D] text-3xl tracking-widest">
         <AnchorIcon size={28} weight="bold" className="inline mr-2 align-middle" />
-        NARR Tools
+        Tools
       </h1>
       <p className="text-[#f5edd8aa] text-xs tracking-[3px] uppercase">What would you like to make?</p>
 

@@ -8,7 +8,7 @@ const FONTS = [
 export default function FontPicker({ font, setFont }) {
   return (
     <div className="flex flex-col gap-2">
-      <p className="text-[10px] tracking-[3px] uppercase text-[#FFD84Daa]">✍️ NARR Font</p>
+      <p className="text-[10px] tracking-[3px] uppercase text-[#FFD84Daa]">✍️ Font</p>
       <div className="flex flex-col gap-2">
         {FONTS.map(f => (
           <button
@@ -22,7 +22,7 @@ export default function FontPicker({ font, setFont }) {
           >
             <span className="text-[10px] text-[#FFD84D88] tracking-widest uppercase">{f.label}</span>
             <span style={{ fontFamily: f.id, fontSize: '36px', color: '#FFD84D', textShadow: '2px 2px 0 rgba(0,0,0,0.5)' }}>
-              NARR
+              Aa
             </span>
           </button>
         ))}
